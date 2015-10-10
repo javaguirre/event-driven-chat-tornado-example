@@ -61,7 +61,7 @@ Vagrant.configure(2) do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
-  config.ssh.forward_agent = true
+  # config.ssh.forward_agent = true
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
@@ -70,8 +70,8 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
-  #config.vm.provision "ansible" do |ansible|
-    #ansible.playbook = "ansible/site.yml"
-    #ansible.verbose = 'v'
-  #end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "ansible/site.yml"
+    ansible.verbose = 'v'
+  end
 end
