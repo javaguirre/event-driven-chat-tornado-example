@@ -1,0 +1,8 @@
+---
+
+- src: Stouts.redis
+
+- src: https://github.com/javaguirre/Stouts.supervisor.git
+
+- name: virtualenv
+  src: https://github.com/brad/ansible-virtualenv

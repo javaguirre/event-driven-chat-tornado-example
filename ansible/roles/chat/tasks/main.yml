@@ -1,0 +1,24 @@
+---
+
+- name: Install dependencies
+  sudo: true
+  apt: name={{ item }} update_cache=yes
+  with_items:
+    - git
+    - python-dev
+
+#- name: Clone the repository
+#  sudo: false
+#  git: |
+#    repo={{ chat_repo }}
+#    dest={{ chat_path }}
+#    version=master
+#    accept_hostkey=yes
+
+- name: Install via PIP and virtualenv
+  sudo: false
+  pip: |
+    chdir={{ chat_path }}
+    virtualenv={{ chat_path }}/.venv
+    virtualenv_command=/usr/local/bin/virtualenv
+    requirements=requirements.txt

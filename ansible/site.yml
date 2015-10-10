@@ -1,0 +1,13 @@
+---
+- name: Event driven chat
+  hosts: all
+  remote_user: vagrant
+  sudo: false
+
+  vars_files:
+    - vars.yml
+
+  roles:
+    - Stouts.supervisor
+    - virtualenv
+    - chat
