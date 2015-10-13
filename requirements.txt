@@ -1,0 +1,8 @@
+argparse==1.2.1
+backports.ssl-match-hostname==3.4.0.2
+certifi==2015.9.6.2
+smokesignal==0.7.0
+tornado==4.2.1
+wsgiref==0.1.2
+apns==2.0.1
+python-gcm==0.1.5
