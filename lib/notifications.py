@@ -6,7 +6,7 @@ import random
 from gcm import GCM
 from apns import APNs, Payload, Frame, PayloadAlert
 
-from backend import MobileBackend
+from lib.backend import MobileBackend
 
 
 class Notification(object):
