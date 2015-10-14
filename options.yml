@@ -1,0 +1,5 @@
+android_gcm: ''
+
+ios_cert_path: ''
+ios_cert_key_path: ''
+ios_sandbox: True
