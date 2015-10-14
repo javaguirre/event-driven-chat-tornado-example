@@ -1,7 +1,7 @@
 import logging
 import json
 
-import smokesignal
+from blinker import signal
 from tornado.web import RequestHandler
 from tornado.websocket import WebSocketHandler as TornadoWebSocketHandler
 
@@ -27,7 +27,7 @@ class WebSocketHandler(TornadoWebSocketHandler):
                      self.connection.count())
 
     def on_message(self, message):
-        smokesignal.emit(Event.NEW_MESSAGE, message)
+        signal(Event.NEW_MESSAGE).send(message)
 
     def on_close(self):
         self.connection.close(self.user_id, self)
@@ -55,7 +55,7 @@ class MessageHandler(RequestHandler):
             we will use this connection to create messages
         '''
         message = self.request.body
-        smokesignal.emit(Event.NEW_MESSAGE, message)
+        signal(Event.NEW_MESSAGE).send(message)
 
         self.write(json.dumps(message))
 
