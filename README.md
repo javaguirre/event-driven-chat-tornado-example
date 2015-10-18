@@ -13,3 +13,6 @@ To install Ansible roles dependencies, after that you can create the VM with:
 The application will be listening, so if you want to check the web front you can go to in your browser
 
     http://localhost:8888
+
+[vagrant]: https://www.vagrantup.com/
+[ansible]: http://www.ansible.com/
