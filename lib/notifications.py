@@ -6,8 +6,6 @@ import random
 from gcm import GCM
 from apns import APNs, Payload, Frame, PayloadAlert
 
-from lib.backend import MobileBackend
-
 
 class Notification(object):
     def set_receptor(self, receptor):
@@ -28,7 +26,9 @@ class AndroidNotification(Notification):
 
     def __init__(self, gcm_key):
         self.gcm = GCM(gcm_key)
-        self.backend = MobileBackend(MobileBackend.ANDROID)
+
+    def set_backend(self, backend):
+        self.backend = backend
 
     def send(self, message):
         device_ids = self.get_devices()
@@ -82,12 +82,14 @@ class IosNotification(Notification):
             key_file=key,
             enhanced=True
         )
-        self.backend = MobileBackend(MobileBackend.IOS)
 
         self.error_callback = self.response_listener
         self.loc_args = []
         self.badge = None
         self.loc_key = None
+
+    def set_backend(self, backend):
+        self.backend = backend
 
     def response_listener(error_response):
         logging.error(': '.join(['IOS ERROR', str(error_response)]))
