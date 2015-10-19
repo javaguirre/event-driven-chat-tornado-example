@@ -8,7 +8,8 @@ from lib.notifications import AndroidNotification, IosNotification
 
 class AndroidListener():
     def __init__(self, options):
-        self.gcm_key = options.gcm
+        self.options = options
+        self.gcm_key = self.options.get('android_gcm', None)
 
         signal(Event.NEW_MESSAGE).connect(self.send)
 
@@ -17,6 +18,8 @@ class AndroidListener():
         logging.info(message)
 
         notification = AndroidNotification(self.gcm_key)
+        notification.set_backend(self.options['mobile_backend'])
+        notification.set_backend(self.options['mobile_backend'])
         notification.set_receptor(message['user_id'])
 
         notification.send(message)
@@ -24,9 +27,10 @@ class AndroidListener():
 
 class IosListener():
     def __init__(self, options):
-        self.cert = options.cert
-        self.key = options.key
-        self.sandbox = options.sandbox
+        self.options = options
+        self.cert = self.options.get('ios_cert_path', None)
+        self.key = self.options.get('ios_cert_key_path', None)
+        self.sandbox = self.options.get('ios_sandbox', True)
 
         signal(Event.NEW_MESSAGE).connect(self.send)
 
@@ -39,6 +43,7 @@ class IosListener():
             self.key,
             self.sandbox
         )
+        notification.set_backend(self.options['mobile_backend'])
         notification.set_badge(message.pop('ios_badge'))
         notification.set_receptor(message['user_id'])
         notification.set_loc_key(message.pop('loc_key'))
