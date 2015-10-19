@@ -7,3 +7,4 @@ apns==2.0.1
 python-gcm==0.1.5
 blinker==1.4
 PyYAML==3.11
+redis==2.10.3
