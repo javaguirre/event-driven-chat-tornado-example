@@ -9,6 +9,9 @@ from events import Event
 
 
 class WebSocketHandler(TornadoWebSocketHandler):
+    def initialize(self, connection):
+        self.connection = connection
+
     def send_ping(self):
         '''
             Using ping you can check if the connection
