@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Event driven chat example</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Event driven chat example</h1>
+
+                <h2>Messages</h2>
+
+                <ul id="chat"></ul>
+
+                <textarea id="message" class="form-control"></textarea>
+
+                <br />
+
+                <input type="button" id="send" value="send" class="btn btn-block btn-danger" />
+            </div>
+
+        </div>
+
+
+        <!-- Static files -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"
+                type="text/javascript">
+        </script>
+        <script src="/static/connection.js" type="text/javascript">
+        </script>
+        <script>
+         $(function() {
+             var $chat = $('#chat');
+             var ENTER_KEY = 13;
+             var websocket = ExampleSocket;
+
+             // TODO This is an example
+             // you should add a unique id
+             // that suits your project
+             var USER_ID = new Date().getTime();
+
+             send_message = function() {
+                 var $message = $('#message');
+                 var text = $message.val();
+
+                 if (text) {
+                     $message.val('');
+                     websocket.send(text);
+                     $chat.append($('<li>').text(USER_ID + ':' + text));
+                 }
+             };
+
+             websocket.init(USER_ID);
+
+             $('#send').click(function() {
+                 send_message();
+             });
+
+             $('#message').keypress(function(e) {
+                 if (e.keyCode == ENTER_KEY) {
+                     send_message();
+                 }
+             });
+        });
+        </script>
+    </body>
+</html>
