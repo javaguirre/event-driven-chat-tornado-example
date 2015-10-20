@@ -53,5 +53,8 @@ class WebSocketConnection(object):
     def get_count(self, user_id):
         return len(self.get(user_id))
 
+    def get_total_count(self):
+        return len(self.clients)
+
     def add(self, user_id, websocket):
         self.clients[user_id].append(websocket)
