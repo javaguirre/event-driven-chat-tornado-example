@@ -4,6 +4,7 @@ For the example you need to have [Ansible][ansible] and [Vagrant][vagrant] insta
 
 To try the example you can do, on the root directory of the project:
 
+    cd ansible
     ansible-galaxy install -r requirements.yml
 
 To install Ansible roles dependencies, after that you can create the VM with:
