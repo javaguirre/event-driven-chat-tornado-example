@@ -23,7 +23,7 @@ Two things I will try to add in the future if I have time:
 - Configuring Celery
 
 We had both in our chat system on [Selltag][selltag], but I need time to
-do It right, would you like to do It? :-)
+do It right, would you like to help me? :-)
 
 [vagrant]: https://www.vagrantup.com/
 [ansible]: http://www.ansible.com/
