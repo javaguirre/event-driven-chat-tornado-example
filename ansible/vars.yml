@@ -6,7 +6,7 @@ supervisor_enabled: yes
 
 supervisor_tasks:
   - name: chat
-    directory: '{{ chat_path }}/apps'
+    directory: '{{ chat_path }}'
     command: '{{ chat_path }}/.venv/bin/python app.py'
     user: '{{ ansible_ssh_user }}'
     stdout_logfile: /var/log/supervisor/chat.log
