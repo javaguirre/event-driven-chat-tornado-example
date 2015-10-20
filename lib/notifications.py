@@ -12,7 +12,7 @@ class Notification(object):
         self.receptor = receptor
 
     def get_devices(self):
-        return list(self.backend.get_user_device_ids(self.receptor))
+        return list(self.backend.get_user_devices(self.receptor))
 
     @abstractmethod
     def send(self, message):
@@ -29,6 +29,7 @@ class AndroidNotification(Notification):
 
     def set_backend(self, backend):
         self.backend = backend
+        self.backend.set_device(self.backend.ANDROID)
 
     def send(self, message):
         device_ids = self.get_devices()
@@ -73,9 +74,13 @@ class IosNotification(Notification):
     IOS_EXPIRY_SECONDS = time.time() + 3600
     IOS_PRIORITY = 10
     DEFAULT_SOUND = 'default'
-    LOC_KEY_ERROR_MESSAGE = 'IosNotification should have loc_key defined'
 
     def __init__(self, cert, key, sandbox):
+        self.enabled = True
+
+        if not cert or not key:
+            self.enabled = False
+
         self.apns = APNs(
             use_sandbox=sandbox,
             cert_file=cert,
@@ -84,12 +89,13 @@ class IosNotification(Notification):
         )
 
         self.error_callback = self.response_listener
-        self.loc_args = []
-        self.badge = None
         self.loc_key = None
+        self.loc_args = []
+        self.badge = 0
 
     def set_backend(self, backend):
         self.backend = backend
+        self.backend.set_device(self.backend.IOS)
 
     def response_listener(error_response):
         logging.error(': '.join(['IOS ERROR', str(error_response)]))
@@ -97,8 +103,8 @@ class IosNotification(Notification):
     def send(self, message):
         success = False
 
-        if not self.loc_key:
-            raise AttributeError(self.LOC_KEY_ERROR_MESSAGE)
+        if not self.enabled:
+            return success
 
         device_tokens = self.get_devices()
 
@@ -117,16 +123,7 @@ class IosNotification(Notification):
     def get_frame(self, message, device_tokens):
         frame = Frame()
         identifier = random.getrandbits(32)
-        payload_alert = PayloadAlert(
-            loc_key=self.loc_key,
-            loc_args=self.loc_args
-        )
-        payload = Payload(
-            alert=payload_alert,
-            custom=message,
-            sound=self.DEFAULT_SOUND,
-            badge=self.badge
-        )
+        payload = Payload(alert=message)
 
         for token in device_tokens:
             frame.add_item(
