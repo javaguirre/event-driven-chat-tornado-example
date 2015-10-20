@@ -1,6 +1,7 @@
 import tornado
 import tornado.httpserver
 from tornado.ioloop import IOLoop
+from tornado.log import enable_pretty_logging
 
 from apps.chat.router import ChatRouter
 from apps.chat.listeners import AndroidListener, IosListener, PersistListener
@@ -9,6 +10,8 @@ from lib.options import get_options
 
 class Application():
     def __init__(self, router):
+        enable_pretty_logging()
+
         self.options = get_options()
         self.router = router
         self.application = tornado.web.Application(
