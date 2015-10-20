@@ -9,5 +9,6 @@
 
   roles:
     - Stouts.supervisor
+    - Stouts.redis
     - virtualenv
     - chat
