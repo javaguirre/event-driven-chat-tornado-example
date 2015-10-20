@@ -15,5 +15,16 @@ The application will be listening, so if you want to check the web front you can
 
     http://localhost:8888
 
+# TODOs
+
+Two things I will try to add in the future if I have time:
+
+- Testing using Tornado testing based on unittest
+- Configuring Celery
+
+We had both in our chat system on [Selltag][selltag], but I need time to
+do It right, would you like to do It? :-)
+
 [vagrant]: https://www.vagrantup.com/
 [ansible]: http://www.ansible.com/
+[selltag]: http://twitter.com/selltag
