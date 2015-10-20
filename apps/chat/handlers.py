@@ -20,6 +20,9 @@ class WebSocketHandler(TornadoWebSocketHandler):
         return self.ping('PING')
 
     def on_pong(self, data):
+        '''
+            Do something if the connection is openned
+        '''
         pass
 
     def open(self, user_id):
@@ -27,10 +30,11 @@ class WebSocketHandler(TornadoWebSocketHandler):
         self.connection.add(self.user_id, self)
 
         logging.info('NUMBER CLIENTS: %d' %
-                     self.connection.count())
+                     self.connection.get_total_count())
 
     def on_message(self, message):
-        signal(Event.NEW_MESSAGE).send(message)
+        data = {'user_id': self.user_id, 'text': message}
+        signal(Event.NEW_MESSAGE).send(data)
 
     def on_close(self):
         self.connection.close(self.user_id, self)
@@ -58,7 +62,8 @@ class MessageHandler(RequestHandler):
             we will use this connection to create messages
         '''
         message = self.request.body
-        signal(Event.NEW_MESSAGE).send(message)
+        data = {'user_id': user_id, 'text': message}
+        signal(Event.NEW_MESSAGE).send(data)
 
         self.write(json.dumps(message))
 

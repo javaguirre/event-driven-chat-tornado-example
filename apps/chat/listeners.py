@@ -19,10 +19,9 @@ class AndroidListener():
 
         notification = AndroidNotification(self.gcm_key)
         notification.set_backend(self.options['mobile_backend'])
-        notification.set_backend(self.options['mobile_backend'])
         notification.set_receptor(message['user_id'])
 
-        notification.send(message)
+        notification.send(message['text'])
 
 
 class IosListener():
@@ -44,12 +43,8 @@ class IosListener():
             self.sandbox
         )
         notification.set_backend(self.options['mobile_backend'])
-        notification.set_badge(message.pop('ios_badge'))
         notification.set_receptor(message['user_id'])
-        notification.set_loc_key(message.pop('loc_key'))
-        notification.set_loc_args(message.pop('loc_args'))
-
-        notification.send(message)
+        notification.send(message['text'])
 
 
 class PersistListener():
